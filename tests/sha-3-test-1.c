@@ -1,6 +1,7 @@
 #include "sha-3.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 // Function to print bytes for debugging
 void print_hex(const uint8_t *data, size_t size) {
@@ -28,16 +29,14 @@ int test_sha3_256() {
         {
             "",
             {
-                // Expected hash for an empty string
+                // Fill with the expected hash for an empty string after calculation or known hash
             }
         },
-
     };
 
     int errors = 0;
     for (size_t i = 0; i < sizeof(test_cases) / sizeof(test_cases[0]); i++) {
-        uint8_t output[32];
-        sha3_256((uint8_t *)test_cases[i].message, strlen(test_cases[i].message), output);
+        uint8_t *output = keccak_hash((uint8_t *)test_cases[i].message, strlen(test_cases[i].message));
 
         if (memcmp(output, test_cases[i].expected, 32) != 0) {
             printf("SHA3-256 Test failed for message: %s\n", test_cases[i].message);
@@ -49,6 +48,8 @@ int test_sha3_256() {
         } else {
             printf("SHA3-256 Test passed for message: %s\n", test_cases[i].message);
         }
+
+        free(output); // Freeing the dynamically allocated memory
     }
 
     return errors;
