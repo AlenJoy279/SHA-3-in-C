@@ -1,4 +1,5 @@
 sha
 sha-3
-./tests/sha-3-test-1
-./tests/sha-3-test-2
+./tests/*.o
+*.o
+test_exec
