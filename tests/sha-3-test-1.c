@@ -1,5 +1,4 @@
 #include "sha-3.h"
-#include "../externals/keccak/keccak.h"
 #include <stdio.h>
 #include <string.h>
 
